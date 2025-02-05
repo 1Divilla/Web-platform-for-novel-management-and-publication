@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <title>Authentication</title>
+</head>
+<body>
+    <section>
+        <!-- Login Form -->
+        <form class="login-box" action="{{ url_for('auth') }}" method="POST">
+            <div class="header">
+                <a href="{{ url_for('home') }}"><ion-icon name="arrow-undo"></ion-icon></a>
+                <h2>Login</h2>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" name="email" required placeholder=" ">
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="password" required placeholder=" ">
+                <label>Password</label>
+            </div>
+            <div class="remember-forgot">
+                <label><input type="checkbox">Remember me</label>
+                <a href="#verification" id="forgot-password-link">Forgot Password?</a>
+            </div>
+            <button type="submit">Login</button>
+            <div class="register-link">
+                <p>Don’t have an account? <a href="{{ url_for('register') }}" id="sign-up-link">Sign Up</a></p>
+            </div>
+        </form>        
+
+        <!-- Sign Up Form -->
+        <form class="sign_up-box" action="{{ url_for('register') }}" method="POST" style="display: none;">
+            <div class="header">
+                <a href="#login" class="back-to-login"><ion-icon name="arrow-undo"></ion-icon></a>
+                <h2>Sign Up</h2>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" name="email" required placeholder=" ">
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="person-sharp"></ion-icon></span>
+                <input type="text" name="nickname" required placeholder=" ">
+                <label>Nickname</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="password" required placeholder=" ">
+                <label>Password</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="confirm_password" required placeholder=" ">
+                <label>Confirm Password</label>
+            </div>
+            <button type="submit">Sign Up</button>
+            <div class="login-link">
+                <p>Have already an account? <a href="{{ url_for('auth') }}" class="back-to-login">Login</a></p>
+            </div>
+        </form>        
+
+        <!-- Verification Form -->
+        <form class="verification-box" action="{{ url_for('auth') }}" method="POST" style="display: none;">
+            <div class="header">
+                <a href="#login" class="back-to-login"><ion-icon name="arrow-undo"></ion-icon></a>
+                <h2>Change Password</h2>
+            </div>
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" required placeholder=" ">
+                <label>Email</label>
+            </div>
+
+            <div class="send-email-link">
+                <p>Didn't receive an email? <a href="javascript:void(0)" onclick="sendEmailAgain()">Send again</a></p>
+            </div>
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="text" required placeholder=" ">
+                <label>Verification Code</label>
+            </div>
+
+            <button type="submit">Confirm New Password</button>
+        </div>
+    </section>
+
+    <!-- Ionicons Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- JavaScript para cambiar entre formularios -->
+    <script>
+        document.getElementById('sign-up-link').addEventListener('click', function() {
+            event.preventDefault();
+            document.querySelector('.login-box').style.display = 'none';
+            document.querySelector('.sign_up-box').style.display = 'block';
+        });
+
+        document.getElementById('forgot-password-link').addEventListener('click', function() {
+            event.preventDefault();
+            document.querySelector('.login-box').style.display = 'none';
+            document.querySelector('.verification-box').style.display = 'block';
+        });
+
+        document.querySelectorAll('.back-to-login').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelector('.sign_up-box').style.display = 'none';
+                document.querySelector('.verification-box').style.display = 'none';
+                document.querySelector('.login-box').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

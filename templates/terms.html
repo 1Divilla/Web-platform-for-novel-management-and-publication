@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/terms.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="terms-container">
+        <div class="box">
+            <h1>{{ terms.title }}</h1>
+            <p class="intro">{{ terms.intro }}</p>
+
+            {% for section in terms.sections %}
+                <div class="section">
+                    <h3 class="section-heading">{{ section.heading }}</h3>
+                    <p class="section-content">{{ section.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <div class="login-menu">
+            <div class="info">
+                <img class="profile-image" src="{{ url_for('profile_image', user_id=session['user_id']) }}" alt="Profile Image">
+                <div class="basic-info">
+                    <span class="text-line">{{ session['user'] }}</span>
+                    <span class="text-line"><ion-icon name="mail-outline"></ion-icon>{{ session['email'] }}</span>
+                </div>
+            </div>
+            <ul class="login-nav">
+                <li class="login-item">
+                    <a id="info-link" title="Hover text" href="#info"><ion-icon name="person-circle-outline"></ion-icon><span>Info</span></a>
+                </li>
+                <li class="login-item">
+                    <a id="library-link" title="Hover text" href="#library"><ion-icon name="book-outline"></ion-icon><span>Library</span></a>
+                </li>
+                <li class="login-item">
+                    <a id="my-novels-link" title="Hover text" href="#my-novels"><ion-icon name="library-outline"></ion-icon><span>My Novels</span></a>
+                </li>
+            </ul>        
+        </div>
+        <div class="profile-box">
+            <div class="info-box">
+                <span class="text-line">Profile Info</span>
+                <div class="info-row">
+                    <span class="data-id">Nickname</span>
+                    <span class="data">{{ session['user'] }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="data-id">Email</span>
+                    <span class="data">{{ session['email'] }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="data-id">Registered</span>
+                    <span class="data">{{ session['date'] }}</span>
+                </div>
+                <div class="data-actions">
+                    <button class="sign_out"><a href="{{ url_for('logout') }}" style="color: white; text-decoration: none;">Sign Out</a></button>
+                    <button class="update">Update</button>
+                    <button class="delete-account">Delete account</button>
+                </div>
+            </div>
+            <div class="library-box" style="display: none;">
+    
+            </div>
+            <div class="my-novels-box" style="display: none;">
+    
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const section = params.get('section') || 'info'; // 'info' es el valor predeterminado
+
+            function showSection(sectionId) {
+                document.querySelector('.info-box').style.display = sectionId === 'info' ? 'block' : 'none';
+                document.querySelector('.library-box').style.display = sectionId === 'library' ? 'block' : 'none';
+                document.querySelector('.my-novels-box').style.display = sectionId === 'my-novels' ? 'block' : 'none';
+
+                // Eliminar la clase 'active' de todos los enlaces
+                document.querySelectorAll('.login-item a').forEach(link => link.classList.remove('active'));
+
+                // Agregar la clase 'active' al enlace correspondiente
+                document.getElementById(`${sectionId}-link`).classList.add('active');
+            }
+
+            showSection(section); // Muestra la sección al cargar la página
+
+            // Agrega eventos de clic para cada enlace
+            document.getElementById('info-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                showSection('info');
+            });
+
+            document.getElementById('library-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                showSection('library');
+            });
+
+            document.getElementById('my-novels-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                showSection('my-novels');
+            });
+        });
+
+    </script>
+{% endblock %}

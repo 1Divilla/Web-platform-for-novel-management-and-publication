@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" id="login_css">
+        {% block styles %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <div class="wrapper">
+                <a class="nav-logo" href="{{ url_for('home') }}" title="Hover text">
+                    <img src="{{ url_for('static', filename='icons/logo.png') }}"/>
+                </a>
+                <div class="navigation-bar">
+                    <div class="menu">
+                        <span class="text-line">Your mini description.</span>
+                        <ul class="menu-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" title="Hover text" href="{{ url_for('browse') }}"><ion-icon name="grid-outline"></ion-icon><span>Browse</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" title="Hover text" href="{{ url_for('update') }}"><ion-icon name="book-outline"></ion-icon><span>Updates</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if session.get('user') %}
+                    <div class="login-nav">
+                        <span class="text-line">Hello <strong>{{ session['user'] }}</strong></span>
+                        <ul class="menu-nav">
+                            <li class="nav-item">
+                                <a href="{{ url_for('profile', section='info') }}" class="nav-link">
+                                    <ion-icon name="person-circle-outline"></ion-icon><span>Profile</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('profile', section='library') }}" class="nav-link">
+                                    <ion-icon name="book-outline"></ion-icon><span>Library</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('profile', section='my-novels') }}" class="nav-link">
+                                    <ion-icon name="library-outline"></ion-icon><span>My Novels</span>
+                                </a>
+                            </li>
+                        </ul>                        
+                    </div>
+                    {% else %}
+                    <div class="login-button">
+                        <button><a href="{{ url_for('auth') }}" style="color: white; text-decoration: none;">Sign In</a></button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="content-wrapper">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+        <footer>
+            <div class="bottom">
+                <div class="bottom-icon">
+                    <a class="nav-logo" href="{{ url_for('home') }}" title="Hover text">
+                        <img src="{{ url_for('static', filename='icons/logo.png') }}"/>
+                    </a>
+                    <span class="copy-text">© novels</span>
+                </div>
+                <div class="legal">
+                    <ul>
+                        <li class="legal-item">
+                            <a href="{{ url_for('policy') }}" class="nav-link"><ion-icon name="attach-outline"></ion-icon><span> Policy</span></a>
+                        </li>
+                        <li class="legal-item">
+                            <a href="{{ url_for('terms') }}" class="nav-link"><ion-icon name="attach-outline"></ion-icon><span> Terms and Conditions</span></a>
+                        </li>
+                    </ul>
+                </div>        
+            </div>   
+        </footer>
+        <!-- Ionicons Scripts -->
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </body>
+</html>

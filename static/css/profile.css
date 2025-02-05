@@ -1,0 +1,188 @@
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 0 auto;
+}
+
+.login-menu {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #222;
+    border-radius: 5px;
+    width: 100%;
+    padding: 20px;
+    margin: 20px;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: le;
+}
+
+.profile-image {
+    height: 80px;
+    border-radius: 5px;
+}
+
+.basic-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: auto 0 0 15px;
+}
+
+.basic-info .text-line {
+    align-items: center;
+    display: flex;
+    font-size: 22px;
+    gap: 8px;
+}
+
+.login-menu .login-nav {
+    border-top: 2px solid #0027b5;
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    list-style: none;
+    gap: 10px;
+}
+
+.login-item {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin-top: 15px;
+    gap: 8px; 
+}
+
+.login-item a.active {
+    padding: 10px 0px 15px 0px;
+    color: #ff9800;
+    border-bottom: 2px solid #ff9800;
+}
+
+.login-item a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    gap: 4px;
+}
+
+.login-item a:hover {
+    color: #ff9800;
+}
+
+.profile-box {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #222;
+    border-radius: 5px;
+    width: 100%;
+    padding: 30px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px;
+    background-color: #1e1e1e;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+/* Título destacado */
+.info-box .text-line {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff9800;
+    padding: 5px 0;
+    border-bottom: 1px solid #444;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.info-row {
+    margin: 5px 0 10px 0;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+}
+
+/* Etiqueta de datos */
+.data-id {
+    font-weight: bold;
+    color: #bbb;
+    text-transform: capitalize;
+    font-size: 16px;
+    padding-right: 20px;  /* Espacio entre etiqueta y dato */
+}
+
+/* Datos del usuario */
+.data {
+    color: #eee;
+    font-size: 16px;
+    font-weight: 400;
+    word-break: break-word;
+}
+
+/* Contenedor de los botones */
+.data-actions {
+    display: flex;
+    gap: 15px; /* Espacio entre los botones */
+    margin-top: 15px;
+}
+
+/* Estilo general para los botones */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animación suave */
+}
+
+/* Botón de "Sign Out" */
+.sign_out {
+    background-color: #ff9800; /* Color naranja */
+    color: white;
+}
+
+.sign_out:hover {
+    background-color: #e68900; /* Color al pasar el ratón */
+    transform: translateY(-2px); /* Efecto sutil de elevar el botón */
+}
+
+/* Botón de "Update" */
+.update {
+    background-color: #4caf50; /* Color verde */
+    color: white;
+}
+
+.update:hover {
+    background-color: #45a049; /* Color al pasar el ratón */
+    transform: translateY(-2px); /* Efecto sutil de elevar el botón */
+}
+
+/* Botón de "Delete account" */
+.delete-account {
+    background-color: #f44336; /* Color rojo */
+    color: white;
+}
+
+.delete-account:hover {
+    background-color: #d32f2f; /* Color al pasar el ratón */
+    transform: translateY(-2px); /* Efecto sutil de elevar el botón */
+}

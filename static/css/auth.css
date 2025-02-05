@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: url('../images/login_background.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-box, .sign_up-box, .verification-box {
+    position: relative;
+    width: 400px;
+    height: auto;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(15px);
+    padding: 20px;
+}
+
+.header {
+    margin: -10px 10px 15px;
+    font-size: 1.43em;
+    color: #fff;
+    display: flex;
+    justify-content: left;
+    width: 100%;
+}
+
+.header a {
+    color: #fff;
+    font-size: 1.3em;
+    text-decoration: none;
+}
+
+.header a:active {
+    color: #0e2aa9;
+}
+
+.login-box .input-box, .sign_up-box .input-box, .verification-box .input-box {
+    position: relative;
+    width: 310px;
+    margin: 30px auto 30px auto;
+    border-bottom: 2px solid;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:not(:placeholder-shown) ~ label {
+    top: -5px;
+}
+
+.login-box .input-box input, .sign_up-box .input-box input, .verification-box .input-box input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #fff;
+    padding: 0 35px 0 5px;
+}
+
+.input-box .icon {
+    position: absolute;
+    right: 8px;
+    color: #fff;
+    font-size: 1.2em;
+    line-height: 57px;
+}
+
+.login-box .remember-forgot, .sign_up-box .remember-forgot, .verification-box .remember-forgot {
+    margin: -15px auto 15px auto;
+    font-size: .9em;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    width: 310px;
+}
+
+.remember-forgot label input {
+    margin: 3px;
+}
+
+.remember-forgot a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+button {
+    width: 80%;
+    height: 40px;
+    background: linear-gradient(45deg, #6faedb, #72b8e6); /* Gradiente brillante de tonos azules */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Borde translúcido blanco para mayor sutileza */
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 1.3em;
+    color: #ffffff; /* Texto en blanco brillante para buen contraste */
+    font-weight: 500;
+    margin: 0 auto 0 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombras suaves para destacar */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+button:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.5); /* Borde ligeramente más brillante al hacer hover */
+}
+
+button:active {
+    background: #5a9ac6; /* Color brillante ligeramente más oscuro al hacer clic */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.7); /* Borde más brillante al hacer clic */
+}
+
+.register-link, .login-link, .send-email-link {
+    font-size: .9em;
+    color: #fff;
+    text-align: center;
+    margin: 25px 0 10px;
+}
+
+.register-link p a, .login-link p a, .send-email-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link p a:hover, .login-link p a:hover, .send-email-link p a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 360px) {
+    .login-box, .sign_up-box, .verification-box {
+        width: 100%;
+        height: 100vh;
+        border: none;
+        border-radius: 0;
+    }
+
+    .input-box {
+        width: 290px;
+    }
+}

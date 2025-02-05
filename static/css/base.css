@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #1e1e2e;
+    border-bottom: 3px solid rgb(30, 17, 17);
+    color: #ffffff;
+    padding: 5px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-logo img {
+    height: 80px;
+    padding: 0 10px 0;
+}
+
+.navigation-bar {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.login-button button {
+    all: unset;
+    text-decoration: none;
+    background-color: #388E3C;
+    color: white;              
+    padding: 10px 20px;        
+    border: 1px solid #388E3C;
+    border-radius: 4px;       
+    cursor: pointer;           
+    font-size: 16px;           
+    font-weight: normal;          
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    display: inline-block;
+    width: 80px;
+    height: 20px;
+    text-align: center;
+}
+
+.login-button button:hover {
+    background-color: #2C6B2F;
+    border-color: #2C6B2F;
+    color: #FF9800;
+}
+
+.login-button button:active {
+    background-color: #27632D;
+    border-color: #27632D;
+}
+
+.text-line {
+    font-size: 14px;
+}
+
+.menu-nav {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    padding: 10px 0px 0px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-link:hover {
+    color: #ff9800;
+}
+
+.user-menu {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.user-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #1d1e26;
+}
+
+.content-wrapper {
+    width: 100%;
+    color: rgb(255, 255, 255);
+}
+
+footer {
+    background-color: #1e1e2e;
+    border-top: 3px solid rgb(30, 17, 17);
+    color: #ffffff;
+    padding: 20px 0;
+    position: relative;
+    overflow: hidden;
+    margin-top: auto;
+}
+
+.bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.bottom-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.legal {
+    display: flex;
+}
+
+.legal ul {
+    display: flex;
+    gap: 10px;
+}
+
+.legal-item {
+    list-style: none;
+}
+
+@media (max-width: 768px) {
+
+    .menu-nav li:nth-child(2),
+    .login-nav li:nth-child(2) { 
+        display: none;
+    }
+
+    .text-line {
+        display: none;
+    }
+
+    .login-button {
+        height: 45px;
+    }
+
+    .nav-logo img {
+        height: 60px;
+    }
+
+    .nav-link {
+        font-size: 16px;
+    }
+}
