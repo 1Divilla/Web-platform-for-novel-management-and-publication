@@ -11,6 +11,9 @@ class User(db.Model):
     image = db.Column(db.LargeBinary, nullable=True)
     date = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     
+    # Fecha programada para la eliminación de la cuenta
+    deletion_date = db.Column(db.DateTime, nullable=True)
+    
     # Relación many-to-many para novelas leídas
     read_novels = db.relationship('Novel', secondary='user_read', backref='readers', lazy='dynamic')
 

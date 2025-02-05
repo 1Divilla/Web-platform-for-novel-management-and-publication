@@ -44,7 +44,9 @@
                 <div class="data-actions">
                     <button class="sign_out"><a href="{{ url_for('logout') }}" style="color: white; text-decoration: none;">Sign Out</a></button>
                     <button class="update">Update</button>
-                    <button class="delete-account">Delete account</button>
+                    <form action="{{ url_for('delete_account_request') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This will be scheduled for deletion in 24 hours.')">
+                        <button class="delete-account" type="submit">Delete account</button>
+                    </form>
                 </div>
             </div>
             <div class="library-box" style="display: none;">
