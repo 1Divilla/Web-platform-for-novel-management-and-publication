@@ -49,6 +49,30 @@
                     </form>
                 </div>
             </div>
+            <div class="edit-window">
+                <div class="edit-header">
+                    <span>Edit Profile</span>
+                    <ion-icon name="close-outline"></ion-icon>
+                </div>
+                <form class="updates" action="{{ url_for('update_profile') }}" method="POST" enctype="multipart/form-data" onsubmit="return validatePasswords()">
+                    <label for="profile_image">Profile Image</label>
+                    <input type="file" id="profile_image" name="profile_image" accept="image/*">
+            
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ session['email'] }}" readonly>
+            
+                    <label for="nickname">Nickname</label>
+                    <input type="text" id="nickname" name="nickname" value="{{ session['user'] }}" required>
+            
+                    <label for="password">New Password</label>
+                    <input type="password" id="password" name="password">
+            
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password">
+            
+                    <button type="submit" class="save-changes">Save Changes</button>
+                </form>
+            </div>
             <div class="library-box" style="display: none;">
     
             </div>
@@ -60,23 +84,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const params = new URLSearchParams(window.location.search);
-            const section = params.get('section') || 'info'; // 'info' es el valor predeterminado
+            const section = params.get('section') || 'info';
 
             function showSection(sectionId) {
                 document.querySelector('.info-box').style.display = sectionId === 'info' ? 'block' : 'none';
                 document.querySelector('.library-box').style.display = sectionId === 'library' ? 'block' : 'none';
                 document.querySelector('.my-novels-box').style.display = sectionId === 'my-novels' ? 'block' : 'none';
 
-                // Eliminar la clase 'active' de todos los enlaces
                 document.querySelectorAll('.login-item a').forEach(link => link.classList.remove('active'));
 
-                // Agregar la clase 'active' al enlace correspondiente
                 document.getElementById(`${sectionId}-link`).classList.add('active');
             }
 
-            showSection(section); // Muestra la sección al cargar la página
+            showSection(section);
 
-            // Agrega eventos de clic para cada enlace
             document.getElementById('info-link').addEventListener('click', function(event) {
                 event.preventDefault();
                 showSection('info');
@@ -92,6 +113,41 @@
                 showSection('my-novels');
             });
         });
-
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const updateButton = document.querySelector('.update');
+            const editWindow = document.querySelector('.edit-window');
+            const closeIcon = document.querySelector('.edit-header ion-icon');
+            
+            updateButton.addEventListener('click', () => {
+                editWindow.classList.add('active');
+            });
+            
+            closeIcon.addEventListener('click', () => {
+                editWindow.classList.remove('active');
+            });
+            
+            window.addEventListener('click', (event) => {
+                if (event.target === editWindow) {
+                    editWindow.classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <script>
+        function validatePasswords() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+    
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <!-- Ionicons Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 {% endblock %}

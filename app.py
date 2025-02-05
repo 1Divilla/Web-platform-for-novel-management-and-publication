@@ -1,4 +1,5 @@
 from flask import Flask, Response, render_template, redirect, url_for, request, flash, session
+from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timezone, timedelta
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
@@ -29,8 +30,47 @@ def browse():
 def update():
     return render_template('update.html')
 
-from flask import redirect, url_for
-from datetime import datetime, timezone, timedelta
+@app.route('/update_profile', methods=['GET', 'POST'])
+def update_profile():
+    user = User.query.get(session.get('user_id'))
+    if not user:
+        flash('No user found', 'danger')
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+        nickname = request.form.get('nickname')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+
+        # Validaciones de los campos
+        if not nickname or not email:
+            flash('Please fill in all required fields.', 'warning')
+            return redirect(url_for('update_profile'))
+
+        if password and password != confirm_password:
+            flash('Passwords do not match. Please try again.', 'danger')
+            return redirect(url_for('update_profile'))
+
+        # Actualizar los datos del usuario
+        user.nick = nickname
+        user.email = email
+
+        # Actualizar la contraseña si es necesario
+        if password:
+            user.password = password
+
+        # Si se incluye una nueva imagen, actualizarla
+        if 'profile_image' in request.files:
+            image = request.files['profile_image']
+            if image.filename:
+                user.image = image.read()
+
+        db.session.commit()
+        flash('Profile updated successfully!', 'success')
+        return redirect(url_for('profile'))
+
+    return render_template('update_profile.html', user=user)
 
 @app.route('/delete_account_request', methods=['POST'])
 def delete_account_request():
@@ -96,7 +136,6 @@ def register():
         confirm_password = request.form.get('confirm_password')
         nickname = request.form.get('nickname')
 
-        # Verificar si las contraseñas coinciden
         if password != confirm_password:
             flash('Passwords do not match. Please try again.', 'danger')
             return redirect(url_for('register'))
@@ -134,17 +173,20 @@ def terms():
     return render_template('terms.html', terms=terms_data)
 
 def delete_scheduled_accounts():
-    now = datetime.now(timezone.utc)
-    users_to_delete = User.query.filter(User.deletion_date != None, User.deletion_date <= now).all()
+    with app.app_context():
+        users_to_delete = User.query.filter(User.deletion_date != None, User.deletion_date <= datetime.now(timezone.utc)).all()
 
-    for user in users_to_delete:
-        db.session.delete(user)
-    db.session.commit()
+        for user in users_to_delete:
+            db.session.delete(user)
+        db.session.commit()
+
+scheduler = BackgroundScheduler(timezone="UTC")
+scheduler.add_job(delete_scheduled_accounts, 'cron', hour=0, minute=0)
+scheduler.start()
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-        delete_scheduled_accounts()
         inspector = inspect(db.engine)
         print("Tablas creadas:", inspector.get_table_names())
     app.run(debug=True)

@@ -25,6 +25,8 @@
 
 .profile-image {
     height: 80px;
+    width: 80px;
+    object-fit: cover;
     border-radius: 5px;
 }
 
@@ -97,7 +99,6 @@
     border: 1px solid #333;
 }
 
-/* Título destacado */
 .info-box .text-line {
     font-size: 20px;
     font-weight: bold;
@@ -118,16 +119,14 @@
     border-bottom: 1px solid #444;
 }
 
-/* Etiqueta de datos */
 .data-id {
     font-weight: bold;
     color: #bbb;
     text-transform: capitalize;
     font-size: 16px;
-    padding-right: 20px;  /* Espacio entre etiqueta y dato */
+    padding-right: 20px;
 }
 
-/* Datos del usuario */
 .data {
     color: #eee;
     font-size: 16px;
@@ -135,14 +134,12 @@
     word-break: break-word;
 }
 
-/* Contenedor de los botones */
 .data-actions {
     display: flex;
-    gap: 15px; /* Espacio entre los botones */
+    gap: 15px;
     margin-top: 15px;
 }
 
-/* Estilo general para los botones */
 button {
     padding: 10px 20px;
     font-size: 16px;
@@ -151,38 +148,132 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Animación suave */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Botón de "Sign Out" */
 .sign_out {
-    background-color: #ff9800; /* Color naranja */
+    background-color: #ff9800;
     color: white;
 }
 
 .sign_out:hover {
-    background-color: #e68900; /* Color al pasar el ratón */
-    transform: translateY(-2px); /* Efecto sutil de elevar el botón */
+    background-color: #e68900;
+    transform: translateY(-2px);
 }
 
-/* Botón de "Update" */
 .update {
-    background-color: #4caf50; /* Color verde */
+    background-color: #4caf50;
     color: white;
 }
 
 .update:hover {
-    background-color: #45a049; /* Color al pasar el ratón */
-    transform: translateY(-2px); /* Efecto sutil de elevar el botón */
+    background-color: #45a049;
+    transform: translateY(-2px);
 }
 
-/* Botón de "Delete account" */
 .delete-account {
-    background-color: #f44336; /* Color rojo */
+    background-color: #f44336;
     color: white;
 }
 
 .delete-account:hover {
-    background-color: #d32f2f; /* Color al pasar el ratón */
-    transform: translateY(-2px); /* Efecto sutil de elevar el botón */
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+}
+
+.edit-window {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+}
+
+.edit-window.active {
+    display: flex;
+}
+
+.edit-header {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(22, 22, 22, 0.9);
+    color: white;
+    padding: 15px;
+    font-size: 1.5em;
+    border-bottom: 2px solid rgb(82, 82, 82);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.edit-header ion-icon {
+    cursor: pointer;
+}
+
+form.updates {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    background-color: rgba(22, 22, 22, 0.9);
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+form.updates label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form.updates input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+form.updates input[readonly] {
+    background-color: #f5f5f5;
+}
+
+form.updates button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+form.updates button:hover {
+    background-color: #45a049;
+}
+
+form.updates input[type="file"] {
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.profile-image-preview {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-image-preview img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
 }
