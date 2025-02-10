@@ -10,18 +10,15 @@
     <body>
         <header>
             <div class="wrapper">
-                <a class="nav-logo" href="{{ url_for('home') }}" title="Hover text">
+                <a class="nav-logo" href="{{ url_for('browse') }}" title="Browse">
                     <img src="{{ url_for('static', filename='icons/logo.png') }}"/>
                 </a>
                 <div class="navigation-bar">
                     <div class="menu">
-                        <span class="text-line">Your mini description.</span>
+                        <span class="text-line">Your novel web.</span>
                         <ul class="menu-nav">
                             <li class="nav-item">
-                                <a class="nav-link" title="Hover text" href="{{ url_for('browse') }}"><ion-icon name="grid-outline"></ion-icon><span>Browse</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" title="Hover text" href="{{ url_for('update') }}"><ion-icon name="book-outline"></ion-icon><span>Updates</span></a>
+                                <a class="nav-link" title="Browse" href="{{ url_for('browse') }}"><ion-icon name="grid-outline"></ion-icon><span>Browse</span></a>
                             </li>
                         </ul>
                     </div>
@@ -32,11 +29,6 @@
                             <li class="nav-item">
                                 <a href="{{ url_for('profile', section='info') }}" class="nav-link">
                                     <ion-icon name="person-circle-outline"></ion-icon><span>Profile</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url_for('profile', section='library') }}" class="nav-link">
-                                    <ion-icon name="book-outline"></ion-icon><span>Library</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -64,7 +56,7 @@
         <footer>
             <div class="bottom">
                 <div class="bottom-icon">
-                    <a class="nav-logo" href="{{ url_for('home') }}" title="Hover text">
+                    <a class="nav-logo" href="{{ url_for('browse') }}" title="Browse">
                         <img src="{{ url_for('static', filename='icons/logo.png') }}"/>
                     </a>
                     <span class="copy-text">© novels</span>

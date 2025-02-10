@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/novel.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="novel-container">
+        <!-- Contenedor principal de la novela -->
+        <div class="novel-header">
+            <img src="{{ url_for('novel_image', novel_id=novel.id) }}" alt="{{ novel.name }}" class="novel-image">
+            <h1>{{ novel.name }}</h1> 
+        </div>
+        
+        <div class="novel-description">
+            <p>{{ novel.description or "No description available." }}</p> <!-- Descripción de la novela -->
+        </div>
+
+        <div class="novel-chapters">
+            <h3>Chapters</h3>
+            <ul>
+                {% for chapter in novel.chapters %}
+                    <li><a href="{{ url_for('chapter', chapter_id=chapter.id) }}">{{ chapter.title }}</a></li>
+                {% else %}
+                    <li>No chapters available.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

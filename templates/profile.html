@@ -16,13 +16,10 @@
             </div>
             <ul class="login-nav">
                 <li class="login-item">
-                    <a id="info-link" title="Hover text" href="#info"><ion-icon name="person-circle-outline"></ion-icon><span>Info</span></a>
+                    <a id="info-link" title="Info" href="#info"><ion-icon name="person-circle-outline"></ion-icon><span>Info</span></a>
                 </li>
                 <li class="login-item">
-                    <a id="library-link" title="Hover text" href="#library"><ion-icon name="book-outline"></ion-icon><span>Library</span></a>
-                </li>
-                <li class="login-item">
-                    <a id="my-novels-link" title="Hover text" href="#my-novels"><ion-icon name="library-outline"></ion-icon><span>My Novels</span></a>
+                    <a id="my-novels-link" title="My Novels" href="#my-novels"><ion-icon name="library-outline"></ion-icon><span>My Novels</span></a>
                 </li>
             </ul>        
         </div>
@@ -73,47 +70,68 @@
                     <button type="submit" class="save-changes">Save Changes</button>
                 </form>
             </div>
-            <div class="library-box" style="display: none;">
-    
-            </div>
             <div class="my-novels-box" style="display: none;">
-    
+                <div class="my-novels-nav">
+                    <ul class="my-novels-nav">
+                        <li class="my-novels-item">
+                            <a id="view-novels" title="My Novels" href="#view-novels"><ion-icon name="list-outline"></ion-icon><span>My Novels</span></a>
+                        </li>
+                        <li class="my-novels-item">
+                            <a id="add-novel" title="Add Novel" href="#add-novel"><ion-icon name="add-circle-outline"></ion-icon><span>Add Novel</span></a>
+                        </li>
+                        <li class="my-novels-item">
+                            <a id="add-chapter" title="Add Chapter" href="#add-chapter"><ion-icon name="add-circle-outline"></ion-icon><span>Add Chapter</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="novels-view-box" data-user-id="{{ session['user_id'] }}">
+                    <div class="my-novels-search">
+                        <input type="text" id="search-novels-input" placeholder="Name" />
+                        <button class="search-novels-button" onclick="searchNovels()">Search</button>
+                    </div>
+                    <ul class="my-novels-list" id="novels-container"></ul>
+                </div>
+                <div class="add-novel-box" style="display: none;">
+                    <div class="add-novel-box-top">
+                        <label for="my-novels-title" class="title-label">Title</label>
+                        <input type="text" class="my-novels-title" name="name" placeholder="Name">
+                    </div>
+                    <div class="add-novel-box-mid">
+                        <label for="my-novels-description" class="description-label">Description</label>
+                        <textarea class="my-novels-description" name="description" placeholder="Description"></textarea>
+                    </div>
+                    <div class="add-novel-box-cover-image">
+                        <label for="novel-image" class="image-label">Cover Image</label>
+                        <input type="file" id="novel-image" class="my-novels-image" name="image" accept="image/*">
+                    </div>
+                    <div class="add-novel-box-bottom">
+                        <button class="create-novel-button">Add Novel</button>
+                    </div>
+                </div>                                         
+                <form class="add-chapter-box" action="{{ url_for('add_chapter') }}" method="POST" enctype="multipart/form-data" style="display: none;">
+                    <h2>Add Chapter</h2>
+            
+                    <!-- Seleccionar novela -->
+                    <label for="novel-select">Select Novel</label>
+                    <select id="novel-select" name="novel_id" required data-user-id="{{ session['user_id'] }}">
+                        <option value="">Loading novels...</option>
+                    </select>
+            
+                    <!-- Título del capítulo -->
+                    <label for="chapter-title">Chapter Title</label>
+                    <input type="text" id="chapter-title" name="chapter_title" placeholder="Enter chapter title" required>
+            
+                    <!-- Contenido del capítulo -->
+                    <label for="chapter-content">Content</label>
+                    <textarea id="chapter-content" name="chapter_content" placeholder="Write your chapter here..." required></textarea>
+            
+                    <!-- Botón de envío -->
+                    <button type="submit" class="submit-chapter-button">Add Chapter</button>
+                </form>
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const params = new URLSearchParams(window.location.search);
-            const section = params.get('section') || 'info';
-
-            function showSection(sectionId) {
-                document.querySelector('.info-box').style.display = sectionId === 'info' ? 'block' : 'none';
-                document.querySelector('.library-box').style.display = sectionId === 'library' ? 'block' : 'none';
-                document.querySelector('.my-novels-box').style.display = sectionId === 'my-novels' ? 'block' : 'none';
-
-                document.querySelectorAll('.login-item a').forEach(link => link.classList.remove('active'));
-
-                document.getElementById(`${sectionId}-link`).classList.add('active');
-            }
-
-            showSection(section);
-
-            document.getElementById('info-link').addEventListener('click', function(event) {
-                event.preventDefault();
-                showSection('info');
-            });
-
-            document.getElementById('library-link').addEventListener('click', function(event) {
-                event.preventDefault();
-                showSection('library');
-            });
-
-            document.getElementById('my-novels-link').addEventListener('click', function(event) {
-                event.preventDefault();
-                showSection('my-novels');
-            });
-        });
-    </script>
+    <!-- Login Nav -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const updateButton = document.querySelector('.update');
@@ -135,6 +153,36 @@
             });
         });
     </script>
+    <!-- Profile Box -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const section = params.get('section') || 'info';
+    
+            function showSection(sectionId) {
+                document.querySelector('.info-box').style.display = sectionId === 'info' ? 'block' : 'none';
+                document.querySelector('.my-novels-box').style.display = sectionId === 'my-novels' ? 'block' : 'none';
+    
+                document.querySelectorAll('.login-item a').forEach(link => link.classList.remove('active'));
+    
+                document.getElementById(`${sectionId}-link`).classList.add('active');
+            }
+    
+            showSection(section);
+    
+            document.getElementById('info-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                showSection('info');
+            });
+    
+            document.getElementById('my-novels-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                showSection('my-novels');
+            });
+        });
+    </script>
+    
+    <!-- Update Profile -->
     <script>
         function validatePasswords() {
             const password = document.getElementById('password').value;
@@ -146,6 +194,164 @@
             }
             return true;
         }
+    </script>
+    <!-- My Novels Nav -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const novelSection = params.get('novel_section') || 'view-novels';
+    
+            function showNovelSection(sectionId) {
+                document.querySelector('.novels-view-box').style.display = sectionId === 'view-novels' ? 'block' : 'none';
+                document.querySelector('.add-novel-box').style.display = sectionId === 'add-novel' ? 'block' : 'none';
+                document.querySelector('.add-chapter-box').style.display = sectionId === 'add-chapter' ? 'block' : 'none';
+    
+                document.querySelectorAll('.my-novels-item a').forEach(link => link.classList.remove('active'));
+    
+                document.getElementById(`${sectionId}`).classList.add('active');
+            }
+    
+            showNovelSection(novelSection);
+    
+            document.getElementById('view-novels').addEventListener('click', function(event) {
+                event.preventDefault();
+                showNovelSection('view-novels');
+            });
+    
+            document.getElementById('add-novel').addEventListener('click', function(event) {
+                event.preventDefault();
+                showNovelSection('add-novel');
+            });
+    
+            document.getElementById('add-chapter').addEventListener('click', function(event) {
+                event.preventDefault();
+                showNovelSection('add-chapter');
+            });
+        });
+    </script>
+    <!-- My Novels Search -->
+    <script>
+        function searchNovels() {
+            const query = document.getElementById('search-novels').value;
+            alert("Buscando: " + query);
+        }
+    </script>
+    <!-- Create Novel-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector(".create-novel-button").addEventListener("click", async function () {
+                let name = document.querySelector(".my-novels-title").value;
+                let description = document.querySelector(".my-novels-description").value;
+                let imageInput = document.querySelector("#novel-image").files[0];
+
+                if (!name || !imageInput) {
+                    alert("Name and Image are required!");
+                    return;
+                }
+
+                let formData = new FormData();
+                formData.append("name", name);
+                formData.append("description", description);
+                formData.append("image", imageInput);
+
+                let response = await fetch("/add_novel", {
+                    method: "POST",
+                    body: formData
+                });
+
+                let result = await response.json();
+
+                if (result.success) {
+                    window.location.href = "?section=my-novels";
+                } else {
+                    alert("Error al agregar la novela.");
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const userId = document.querySelector(".novels-view-box").getAttribute("data-user-id");
+            if (userId) {
+                loadNovels(userId);
+            }
+
+            document.getElementById("search-novels-input").addEventListener("input", searchNovels);
+        });
+
+        function loadNovels(userId) {
+            fetch(`/api/novels/${userId}`)
+                .then(response => response.json())
+                .then(novels => {
+                    const container = document.getElementById("novels-container");
+                    container.innerHTML = "";
+
+                    if (novels.error) {
+                        container.innerHTML = `<li>${novels.error}</li>`;
+                        return;
+                    }   
+
+                    novels.forEach(novel => {
+                        const novelItem = document.createElement("li");
+                        novelItem.classList.add("novel-item");
+                        novelItem.innerHTML = `
+                            ${novel.image ? `<img src="${novel.image}" width="100">` : ""}
+                            <div class="text-info">
+                                <h3>${novel.name}</h3>
+                                <p>${novel.description || "No description available"}</p>
+                                <p><strong>Chapters:</strong> ${novel.chapters}</p>
+                            </div>
+                        `;
+                        container.appendChild(novelItem);
+                    });
+                })
+                .catch(error => console.error("Error loading novels:", error));
+        }
+
+        function searchNovels() {
+            const searchTerm = document.getElementById("search-novels-input").value.toLowerCase();
+            const novels = document.querySelectorAll(".novel-item");
+
+            novels.forEach(novel => {
+                const title = novel.querySelector("h3").textContent.toLowerCase();
+                novel.style.display = title.includes(searchTerm) ? "list-item" : "none";
+            });
+        }
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const novelSelect = document.getElementById("novel-select");
+            const userId = novelSelect.getAttribute("data-user-id");
+
+            if (!userId) {
+                console.error("No user ID found.");
+                return;
+            }
+
+            fetch(`/api/novels/${userId}`)
+                .then(response => response.json())
+                .then(novels => {
+                    novelSelect.innerHTML = "";
+
+                    if (novels.length === 0) {
+                        novelSelect.innerHTML = `<option value="">No novels found</option>`;
+                        return;
+                    }
+
+                    novels.forEach(novel => {
+                        const option = document.createElement("option");
+                        option.value = novel.id;
+                        option.textContent = novel.name;
+                        novelSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching novels:", error);
+                    novelSelect.innerHTML = `<option value="">Error loading novels</option>`;
+                });
+        });
+
     </script>
     <!-- Ionicons Scripts -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

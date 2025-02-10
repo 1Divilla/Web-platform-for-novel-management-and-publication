@@ -1,0 +1,119 @@
+.browse-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 12px;
+}
+
+.novel-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.novel-card {
+    background: #333;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.novel-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.novel-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.novel-card:hover img {
+    transform: scale(1.05);
+}
+
+.novel-card h2 {
+    font-size: 22px;
+    color: #fafafa;
+    font-weight: 600;
+    margin-bottom: 12px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 60px;
+}
+
+.novel-card p {
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.novel-card p strong {
+    font-weight: bold;
+    color: #f5a623;
+}
+
+.novel-card a {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #193f6b;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.novel-card a:hover {
+    background-color: #357ab7;
+    transform: scale(1.05);
+}
+
+#novel-list p {
+    font-size: 16px;
+    color: #bbb;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .novel-list {
+        grid-template-columns: 1fr;
+    }
+
+    .novel-card {
+        padding: 15px;
+    }
+
+    .novel-card img {
+        height: 200px;
+    }
+
+    .novel-card h2 {
+        font-size: 18px;
+        max-height: 48px;
+    }
+}

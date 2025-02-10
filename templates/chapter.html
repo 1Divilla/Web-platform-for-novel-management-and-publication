@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chapter.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="chapter-container">
+        <h1 class="chapter-title">{{ chapter.title }}</h1>
+        <p class="chapter-number">Capítulo {{ chapter.number }}</p>
+
+        <div class="chapter-content">
+            {{ chapter.content | safe }}
+        </div>
+
+        <div class="chapter-navigation">
+            {% if prev_chapter %}
+                <a href="{{ url_for('chapter', chapter_id=prev_chapter.id) }}">Previous Chapter</a>
+            {% endif %}
+
+            {% if next_chapter %}
+                <a href="{{ url_for('chapter', chapter_id=next_chapter.id) }}">Next Chapter</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

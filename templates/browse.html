@@ -1,12 +1,49 @@
 {% extends "base.html" %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/browse.css') }}">
+{% endblock %}
+
 {% block content %}
-    <p>Hola</p>
-    <style>
-
-    </style>
-
+    <div class="browse-container">
+        <div class="novel-list" id="novel-list">
+            <p>Loading novels...</p>
+        </div>
+    </div>
+    
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/api/novels')
+                .then(response => response.json())
+                .then(novels => {
+                    const novelList = document.getElementById('novel-list');
+                    novelList.innerHTML = '';
 
+                    if (novels.length === 0) {
+                        novelList.innerHTML = '<p>No novels found.</p>';
+                        return;
+                    }
+
+                    novels.forEach(novel => {
+                        const novelCard = document.createElement('div');
+                        novelCard.classList.add('novel-card');
+                        
+                        novelCard.innerHTML = `
+                            <a href="/novel/${novel.id}" class="novel">
+                                <img src="${novel.image || '/static/default-novel.png'}" alt="${novel.name}">
+                                <h2>${novel.name}</h2>
+                                <p>${novel.description || 'No description available.'}</p>
+                                <p><strong>Chapters:</strong> ${novel.chapters}</p>
+                            </a>
+                        `;
+
+                        novelList.appendChild(novelCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching novels:', error);
+                    document.getElementById('novel-list').innerHTML = '<p>Error loading novels.</p>';
+                });
+        });
     </script>
 {% endblock %}

@@ -26,6 +26,7 @@ class UserRead(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     novel_id = db.Column(db.Integer, db.ForeignKey('novel.id'), primary_key=True)
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapter.id'), nullable=True)
+    favorite = db.Column(db.Boolean, default=False)
 
 
 class Novel(db.Model):

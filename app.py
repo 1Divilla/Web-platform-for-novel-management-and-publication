@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
 import tools as tls
-from models import db, User, UserRead, Novel, Chapter
+from models import db, User, Novel, Chapter
 
 app = Flask(__name__)
 app.secret_key = 'mysecretkey'
@@ -16,19 +16,15 @@ db.init_app(app)
 
 @app.route('/')
 def principal():
-    return render_template('home.html')
+    return render_template('browse.html')
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('browse.html')
 
 @app.route('/browse')
 def browse():
     return render_template('browse.html')
-
-@app.route('/update')
-def update():
-    return render_template('update.html')
 
 @app.route('/update_profile', methods=['GET', 'POST'])
 def update_profile():
@@ -80,6 +76,156 @@ def delete_account_request():
         db.session.commit()
         flash('Account deletion scheduled for 24 hours from now.', 'warning')
     return redirect(url_for('logout'))
+
+@app.route('/add_novel', methods=['POST'])
+def add_novel():
+    name = request.form.get('name')
+    description = request.form.get('description')
+    user_id = session.get('user_id')
+    image_file = request.files.get('image')
+
+    if not name or not image_file or not user_id:
+        return {"success": False, "error": "Missing data"}, 400 
+
+    image_data = image_file.read()
+
+    # Crear la novela
+    new_novel = Novel(
+        name=name,
+        description=description,
+        image=image_data,
+        user_id=user_id
+    )
+
+    db.session.add(new_novel)
+    db.session.commit()
+
+    return {"success": True}
+
+@app.route('/add_chapter', methods=['POST'])
+def add_chapter():
+    try:
+        data = request.form 
+
+        print("Datos recibidos:", data)
+
+        title = data.get('chapter_title')
+        content = data.get('chapter_content')
+        novel_id = data.get('novel_id')
+
+        if not title or not content or not novel_id:
+            return {"error": "Faltan datos obligatorios (chapter_title, chapter_content, novel_id)"}, 400
+
+        novel_id = int(novel_id)
+
+        # Obtener el número del último capítulo
+        last_chapter = Chapter.query.filter_by(novel_id=novel_id).order_by(Chapter.number.desc()).first()
+        new_number = last_chapter.number + 1 if last_chapter else 1
+
+        # Crear el nuevo capítulo
+        new_chapter = Chapter(
+            number=new_number,
+            title=title,
+            content=content,
+            novel_id=novel_id
+        )
+
+        db.session.add(new_chapter)
+        db.session.commit()
+
+        return redirect(url_for('profile'))
+
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+
+@app.route('/api/novels/<int:user_id>', methods=['GET'])
+def get_user_novels(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return {"error": "User not found"}, 404
+
+    novels = [
+        {
+            "id": novel.id,
+            "name": novel.name,
+            "description": novel.description,
+            "image": f"/novel_image/{novel.id}" if novel.image else None,
+            "chapters": len(novel.chapters)
+        }
+        for novel in user.novels
+    ]
+
+    return novels
+
+@app.route('/api/novels', methods=['GET'])
+def get_all_novels():
+    novels = Novel.query.all()
+
+    novels_data = [
+        {
+            "id": novel.id,
+            "name": novel.name,
+            "description": novel.description,
+            "image": f"/novel_image/{novel.id}" if novel.image else None,
+            "chapters": len(novel.chapters)
+        }
+        for novel in novels
+    ]
+
+    return novels_data
+
+@app.route('/novel_image/<int:novel_id>')
+def novel_image(novel_id):
+    novel = Novel.query.get(novel_id)
+    if novel and novel.image:
+        return Response(novel.image, mimetype='image/png')
+    else:
+        return 'Image not found', 404
+
+@app.route('/chapter/<int:chapter_id>')
+def chapter(chapter_id):
+    chapter = Chapter.query.get(chapter_id)
+    
+    if not chapter:
+        flash('Chapter not found.', 'danger')
+        return render_template('404.html')
+
+    novel = chapter.novel
+    if not novel:
+        flash('Novel not found.', 'danger')
+        return render_template('404.html')
+
+    prev_chapter = Chapter.query.filter_by(novel_id=novel.id)\
+        .filter(Chapter.number < chapter.number)\
+        .order_by(Chapter.number.desc())\
+        .first()
+
+    next_chapter = Chapter.query.filter_by(novel_id=novel.id)\
+        .filter(Chapter.number > chapter.number)\
+        .order_by(Chapter.number.asc())\
+        .first()
+
+    return render_template(
+        'chapter.html',
+        chapter=chapter,
+        novel=novel,
+        prev_chapter=prev_chapter,
+        next_chapter=next_chapter
+    )
+
+    
+@app.route('/novel/<int:id>')
+def novel(id):
+    novel = get_novel_by_id(id)
+
+    if not novel:
+        return render_template('404.html')
+
+    return render_template('novel.html', novel=novel)
+
+def get_novel_by_id(novel_id):
+    return Novel.query.get(novel_id)
 
 @app.route('/profile')
 def profile():

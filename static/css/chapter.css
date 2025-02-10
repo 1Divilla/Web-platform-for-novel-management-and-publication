@@ -1,0 +1,60 @@
+.chapter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 12px;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el título del capítulo */
+.chapter-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Número del capítulo */
+.chapter-number {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #bbb;
+    margin-bottom: 15px;
+}
+
+/* Contenido del capítulo */
+.chapter-content {
+    width: 100%;
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 1rem;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 8px;
+}
+
+/* Navegación entre capítulos */
+.chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.chapter-navigation a {
+    text-decoration: none;
+    color: #ffcc00;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.chapter-navigation a:hover {
+    background: rgba(255, 204, 0, 0.2);
+}
